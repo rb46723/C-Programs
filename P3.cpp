@@ -1,17 +1,61 @@
-#include <stdio.h>
-void towers(int, char, char, char);
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<dos.h>
 
-int main()
-{
-int num;
+struct node
+{ int data;
+  struct node *nxt;
+}*head,*newnode,*prenode,*ptr;
 
-printf("Enter the number of disks : "); scanf("%d", &num);
-printf("The Sequence of moves involved in the Tower of Hanoi are :\n"); towers(num, 'A', 'C', 'B');
-return 0;
+void llmake()
+{ int i=1;
+  char j;
+  head=(struct node *)malloc(sizeof(struct node));
+  printf("Input data for node %d : ",i);
+  scanf("%d",&head->data);
+  head->nxt=NULL;
+  prenode=head;
+  printf("\tWant to enter more ? (y/n) : ");
+  scanf("%s",&j);
+  while(j=='y')
+  { i++;
+    newnode=(struct node *)malloc(sizeof(struct node));
+    printf("\nEnter data for node %d : ",i);
+    scanf("%d",&newnode->data);
+    newnode->nxt=NULL;
+    prenode->nxt=newnode;
+    prenode=newnode;
+    printf("\tWant to enter more ? (y/n) : ");
+    scanf("%s",&j);
+  }
 }
-void towers(int num, char frompeg, char topeg, char auxpeg)
-{
-if (num == 1)
-{
-printf("\n Move disk 1 from peg %c to peg %c", frompeg, topeg); return;
+
+void displaycll()
+{ int i=1;
+  ptr=head;
+  printf("\n\nLinked list is :-\n");
+  do
+  { printf("---------------------------------\n");
+    printf("| Node | Data | Address |  Next |\n");
+    printf("---------------------------------\n");
+    printf("|  %d   |  %d   |   %d  |  %d |\n",i,ptr->data,ptr,ptr->nxt);
+    printf("---------------------------------\n");
+    if(ptr->nxt!=NULL)
+    { printf("               |\n");
+      printf("               v\n");
+    }
+    ptr=ptr->nxt;
+    i++;
+    delay(750);
+  }while(ptr!=NULL);
+}
+
+void main()
+{ clrscr();
+  printf("LL creation :-\n\n");
+  llmake();
+  displaycll();
+  printf("\nPress any key to EXIT...");
+  getch();
 }
